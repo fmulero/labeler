@@ -43,7 +43,7 @@ async function label() {
   const myToken = core.getInput("repo-token");
   const ignoreIfAssigned = core.getInput("ignore-if-assigned");
   const ignoreIfLabeled = core.getInput("ignore-if-labeled");
-  const octokit = new github.GitHub(myToken);
+  const octokit = new github.getOctokit(myToken);
   const context = github.context;
   const repoName = context.payload.repository.name;
   const ownerName = context.payload.repository.owner.login;
@@ -59,7 +59,7 @@ async function label() {
 
   // query for the most recent information about the issue. Between the issue being created and
   // the action running, labels or asignees could have been added
-  var updatedIssueInformation = await octokit.issues.get({
+  var updatedIssueInformation = await octokit.rest.issues.get({
     owner: ownerName,
     repo: repoName,
     issue_number: issueNumber
@@ -87,14 +87,14 @@ async function label() {
 
   if (labelsToRemove.length != 0) {
     labels = labels.filter(value => !labelsToRemove.includes(value));
-    await octokit.issues.update({
+    await octokit.rest.issues.update({
       owner: ownerName,
       repo: repoName,
       issue_number: issueNumber,
       labels: labels
     });
   } else {
-    await octokit.issues.addLabels({
+    await octokit.rest.issues.addLabels({
       owner: ownerName,
       repo: repoName,
       issue_number: issueNumber,
@@ -107,12 +107,10 @@ async function label() {
 label()
   .then(
     result => {
-      // eslint-disable-next-line no-console
-      console.log(result);
+      core.info(result);
     },
     err => {
-      // eslint-disable-next-line no-console
-      console.log(err);
+      core.setFailed(err);
     }
   )
   .then(() => {
