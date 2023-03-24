@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
-    "prepare": "ncc build label.js -o dist --source-map --license licenses.txt",
-    "all": "npm run lint && npm run prepare && npm run test"
+    "package": "ncc build label.js -o dist --source-map --license licenses.txt"
   },
   "repository": {
     "type": "git",
