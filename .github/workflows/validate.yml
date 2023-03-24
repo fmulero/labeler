@@ -56,13 +56,26 @@ jobs:
         uses: ./
         with:
           issue-number: 4
-          add-labels: test
+          add-labels: test, bug
 
       - name: Untag issue
         uses: ./
         with:
           issue-number: 4
           remove-labels: test
+
+      - name: Tag and untag issue
+        uses: ./
+        with:
+          issue-number: 4
+          add-labels: test
+          remove-labels: bug
+
+      - name: Remove all tags
+        uses: ./
+        with:
+          issue-number: 4
+          add-labels:
 
       - name: Tag non existing issue (forced error)
         uses: ./
