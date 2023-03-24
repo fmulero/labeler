@@ -25,4 +25,4 @@ branding:
   color: orange
 runs:
   using: 'node16'
-  main: 'label.js'
+  main: 'dist/index.js'
