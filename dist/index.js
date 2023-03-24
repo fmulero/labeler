@@ -9858,10 +9858,10 @@ async function label() {
           issue_number: issueNumber
         });
       } catch (err) {
-        core.error(
-          `Can not get information for issue number ${issueNumber} in ${ownerName}/${repoName} repository`
+        throw new Error(
+          `Can not get information for issue number ${issueNumber} in ${ownerName}/${repoName} repository. Cause: ${err}`,
+          { cause: err }
         );
-        throw err;
       }
       if (ignoreIfAssigned) {
         // check if the issue has been assigned to anyone
@@ -9889,10 +9889,10 @@ async function label() {
           labels: labels
         });
       } catch (err) {
-        core.err(
-          `Can not update issue number ${issueNumber} in ${ownerName}/${repoName} repository`
+        throw new Error(
+          `Can not update issue number ${issueNumber} in ${ownerName}/${repoName} repository. Cause: ${err}`,
+          { cause: err }
         );
-        throw err;
       }
       return `Updated labels in ${issueNumber}. Added: ${labelsToAdd}. Removed: ${labelsToRemove}.`;
     } else {
@@ -9906,10 +9906,10 @@ async function label() {
           labels: labelsToAdd
         });
       } catch (err) {
-        core.error(
-          `Can not add labels to the issue number ${issueNumber} in ${ownerName}/${repoName} repository`
+        throw new Error(
+          `Can not add labels to the issue number ${issueNumber} in ${ownerName}/${repoName} repository. Cause: ${err}`,
+          { cause: err }
         );
-        throw err;
       }
       return `Updated labels in ${issueNumber}. Added: ${labelsToAdd}.`;
     }
