@@ -45,8 +45,9 @@ jobs:
         id: diff
 
   test:
-    runs-on: ubuntu-latest
+    name: Functional tests
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -56,11 +57,13 @@ jobs:
         with:
           issue-number: 4
           add-labels: test
+
       - name: Untag issue
         uses: ./
         with:
           issue-number: 4
           remove-labels: test
+
       - name: Tag non existing issue (forced error)
         uses: ./
         continue-on-error: true
